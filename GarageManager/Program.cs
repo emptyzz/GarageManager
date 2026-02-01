@@ -11,13 +11,7 @@ namespace GarageManager
     {
         static void Main()
         {
-            var car = new Car();
-            car.Name = "Toyota Crown";
-            car.MileageKm = 464500;
-
-
-            Console.WriteLine(car.Name);
-            Console.WriteLine(car.MileageKm);
+            
         }
     }
 }
