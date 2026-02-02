@@ -13,25 +13,55 @@ namespace GarageManager
         static void Main()
         {
             var garage = new GarageService();
-
-            var car1 = new Car();
-            car1.Name = "Toyota Crown";
-            car1.MileageKm = 245000;
-
-            var car2 = new Car();
-            car2.Name = "Mark II";
-            car2.MileageKm = 180000;
-
-            garage.AddCar(car1);
-            garage.AddCar(car2);
-
-            var cars = garage.GetCars();
-
-            foreach (var c in cars)
+            while (true)
             {
-                Console.WriteLine(c.Name + " - " + c.MileageKm + " km");
-            }
+                Console.WriteLine("\n=== Garage Manager ===");
+                Console.WriteLine("1 - Add car");
+                Console.WriteLine("2 - Show cars");
+                Console.WriteLine("0 - Exit");
 
+                Console.WriteLine("Choose option: ");
+                var input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "1":
+                        Console.Write("Car name: ");
+                        var name = Console.ReadLine();
+
+                        Console.Write("Mileage: ");
+                        int mileage = int.Parse(Console.ReadLine());
+
+                        var car = new Car { Name = name, MileageKm = mileage};
+                        garage.AddCar(car);
+                        Console.WriteLine("Car added successful");
+                        break;
+
+                    case "2":
+                        var cars = garage.GetCars();
+
+                        if(cars.Count == 0)
+                        {
+                            Console.WriteLine("No cars added yet.");
+                        }
+                        else
+                        {
+                            foreach (var c in cars)
+                            {
+                                Console.WriteLine(c.Name + " - " + c.MileageKm + " km");
+                            }
+                        }
+                        break;
+
+                    case "0":
+
+                        return;
+
+                    default:
+                        Console.WriteLine("Unknown option");
+                        break;
+                }
+            }
         }
     }
 }
