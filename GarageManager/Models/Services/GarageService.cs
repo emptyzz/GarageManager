@@ -44,5 +44,17 @@ namespace GarageManager.Models.Services
             }
             return result;
         }
+        public decimal GetTotalCostForCar(string carName)
+        {
+            decimal totalCost = 0;
+            foreach (var record in _records)
+            {
+                if(string.Equals(record.CarName, carName, StringComparison.OrdinalIgnoreCase))
+                {
+                    totalCost += record.Cost;
+                }
+            }
+            return totalCost;
+        }
     }
 }
