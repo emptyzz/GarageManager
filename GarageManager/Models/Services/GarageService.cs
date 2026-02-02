@@ -9,6 +9,7 @@ namespace GarageManager.Models.Services
     internal class GarageService
     {
         private List<Car> _cars = new List<Car>();
+        private List<ServiceRecord> _records = new List<ServiceRecord>();
 
         public void AddCar(Car car)
         {
@@ -18,6 +19,16 @@ namespace GarageManager.Models.Services
         public IReadOnlyList<Car> GetCars()
         {
             return _cars;
+        }
+
+        public void AddRecord(ServiceRecord record)
+        {
+            _records.Add(record);
+        }
+
+        public IReadOnlyList<ServiceRecord> GetRecords()
+        {
+            return _records;
         }
     }
 }
