@@ -30,5 +30,19 @@ namespace GarageManager.Models.Services
         {
             return _records;
         }
+
+        public List<ServiceRecord> GetRecordsForCar(string carName)
+        {
+            var result = new List<ServiceRecord>();
+
+            foreach (var record in _records)
+            {
+                if (string.Equals(record.CarName, carName, StringComparison.OrdinalIgnoreCase))
+                {
+                    result.Add(record);
+                }
+            }
+            return result;
+        }
     }
 }
