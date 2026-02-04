@@ -18,6 +18,8 @@ namespace GarageManager
                 Console.WriteLine("\n=== Garage Manager ===");
                 Console.WriteLine("1 - Add car");
                 Console.WriteLine("2 - Show cars");
+                Console.WriteLine("3 - Add service record");
+                Console.WriteLine("4 - Show service record");
                 Console.WriteLine("0 - Exit");
 
                 Console.WriteLine("Choose option: ");
@@ -49,6 +51,44 @@ namespace GarageManager
                             foreach (var c in cars)
                             {
                                 Console.WriteLine(c.Name + " - " + c.MileageKm + " km");
+                            }
+                        }
+                        break;
+
+                    case "3":
+                        Console.Write("Car name: ");
+                        var nameRecord = Console.ReadLine();
+
+                        Console.Write("Mileage: ");
+                        var mileageRecord = int.Parse(Console.ReadLine());
+
+                        Console.Write("Description record: ");
+                        var descriptionRecord = Console.ReadLine();
+
+                        Console.Write("Hom much cost: ");
+                        decimal cost = decimal.Parse(Console.ReadLine());
+
+                        var record = new ServiceRecord {CarName = nameRecord, MileageKm = mileageRecord, Description = descriptionRecord, Cost = cost, Date = DateTime.Today};
+                        garage.AddRecord(record);
+                        Console.WriteLine("Record added successful");
+                        break;
+
+                    case "4":
+                        Console.Write("Car name: ");
+                        var nameGetRecords = Console.ReadLine();
+
+                        var records = garage.GetRecordsForCar(nameGetRecords);
+
+                        if (records.Count == 0)
+                        {
+                            Console.WriteLine("No records");
+                        }
+
+                        else
+                        {
+                            foreach (var r in records)
+                            {
+                                Console.WriteLine(r.Date + " | " + r.Description + " | " + r.Cost);
                             }
                         }
                         break;
