@@ -20,6 +20,7 @@ namespace GarageManager
                 Console.WriteLine("2 - Show cars");
                 Console.WriteLine("3 - Add service record");
                 Console.WriteLine("4 - Show service record");
+                Console.WriteLine("5 - Total cost for car");
                 Console.WriteLine("0 - Exit");
 
                 Console.WriteLine("Choose option: ");
@@ -92,6 +93,18 @@ namespace GarageManager
                             }
                         }
                         break;
+
+                    case "5":
+                        Console.Write("Car name: ");
+                        var nameCost = Console.ReadLine();
+                        var total = garage.GetTotalCostForCar(nameCost);
+                        if (total == 0)
+                            Console.WriteLine("No record / total 0");
+                        else
+                            Console.WriteLine("Total cost for " + nameCost + ": " + total);
+                        
+                        break;
+                        
 
                     case "0":
 
