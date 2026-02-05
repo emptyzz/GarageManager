@@ -4,8 +4,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using GarageManager.Models;
 
-namespace GarageManager.Models.Services
+namespace GarageManager.Services
 {
     internal class GarageService
     {
@@ -50,7 +51,7 @@ namespace GarageManager.Models.Services
             decimal totalCost = 0;
             foreach (var record in _records)
             {
-                if(string.Equals(record.CarName, carName, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(record.CarName, carName, StringComparison.OrdinalIgnoreCase))
                 {
                     totalCost += record.Cost;
                 }

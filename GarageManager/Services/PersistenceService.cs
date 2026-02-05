@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GarageManager.Models.Services
+namespace GarageManager.Services
 {
     internal class PersistenceService
     {

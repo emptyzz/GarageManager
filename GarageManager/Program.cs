@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GarageManager.Models;
-using GarageManager.Models.Services;
+using GarageManager.Services;
 
 namespace GarageManager
 {
