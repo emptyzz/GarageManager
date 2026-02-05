@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -55,6 +56,25 @@ namespace GarageManager.Models.Services
                 }
             }
             return totalCost;
+        }
+
+        public GarageData ExportData()
+        {
+            var data = new GarageData();
+            data.Cars.AddRange(_cars);
+            data.Records.AddRange(_records);
+            return data;
+        }
+
+        public void ImportData(GarageData data)
+        {
+            _cars.Clear();
+            _records.Clear();
+
+            if (data == null) return;
+
+            _cars.AddRange(data.Cars);
+            _records.AddRange(data.Records);
         }
     }
 }
