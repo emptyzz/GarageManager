@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using GarageManager.Models;
 using GarageManager.Services;
 
@@ -13,6 +14,11 @@ namespace GarageManager
         static void Main()
         {
             var garage = new GarageService();
+
+            var persistence = new PersistenceService("garage.json");
+            var data = persistence.Load();
+            garage.ImportData(data);
+
             while (true)
             {
                 Console.WriteLine("\n=== Garage Manager ===");
@@ -21,6 +27,8 @@ namespace GarageManager
                 Console.WriteLine("3 - Add service record");
                 Console.WriteLine("4 - Show service record");
                 Console.WriteLine("5 - Total cost for car");
+                Console.WriteLine("6 - Save data");
+                Console.WriteLine("7 - Load data");
                 Console.WriteLine("0 - Exit");
 
                 Console.WriteLine("Choose option: ");
@@ -105,6 +113,16 @@ namespace GarageManager
                         
                         break;
                         
+                    case "6":
+                        var dataToSave = garage.ExportData();
+                        persistence.Save(dataToSave);
+                        Console.WriteLine("Saved.");
+                        break;
+                    case "7":
+                        var dataToLoad = persistence.Load();
+                        garage.ImportData(dataToLoad);
+                        Console.WriteLine("Loaded.");
+                        break;
 
                     case "0":
 
