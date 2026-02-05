@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Car.cs" />
+    <Compile Include="Models\GarageData.cs" />
     <Compile Include="Models\Services\GarageService.cs" />
     <Compile Include="Models\SeviceRecord.cs" />
     <Compile Include="Program.cs" />
