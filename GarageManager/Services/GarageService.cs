@@ -23,6 +23,13 @@ namespace GarageManager.Services
             return _cars;
         }
 
+        public bool DeleteCar(string carName)
+        {
+            int removedCars = _cars.RemoveAll(x => x.Name == carName);
+            _records.RemoveAll(x => x.CarName == carName);
+            return removedCars > 0;
+        }
+
         public void AddRecord(ServiceRecord record)
         {
             _records.Add(record);

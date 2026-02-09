@@ -29,6 +29,7 @@ namespace GarageManager
                 Console.WriteLine("5 - Total cost for car");
                 Console.WriteLine("6 - Save data");
                 Console.WriteLine("7 - Load data");
+                Console.WriteLine("8 - Delete car");
                 Console.WriteLine("0 - Exit");
 
                 Console.WriteLine("Choose option: ");
@@ -122,6 +123,16 @@ namespace GarageManager
                         var dataToLoad = persistence.Load();
                         garage.ImportData(dataToLoad);
                         Console.WriteLine("Loaded.");
+                        break;
+
+                    case "8":
+                        Console.Write("Car name: ");
+                        var nameDeletedCar = Console.ReadLine();
+
+                        if (garage.DeleteCar(nameDeletedCar))
+                            Console.WriteLine("Car deleted successful");
+                        else Console.WriteLine("Car not found");
+
                         break;
 
                     case "0":
