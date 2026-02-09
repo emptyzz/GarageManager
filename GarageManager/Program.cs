@@ -14,6 +14,8 @@ namespace GarageManager
     {
         static void Main()
         {
+            DatabaseInitializer.Initialize();
+
             var garage = new GarageService();
 
             var persistence = new PersistenceService("garage.json");
