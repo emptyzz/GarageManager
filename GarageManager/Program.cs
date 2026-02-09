@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using GarageManager.Models;
 using GarageManager.Services;
+using GarageManager.UI;
 
 namespace GarageManager
 {
@@ -38,20 +39,8 @@ namespace GarageManager
                 switch (input)
                 {
                     case "1":
-                        Console.Write("Car name: ");
-                        var name = Console.ReadLine();
-
-                        int mileage;
-                        while (true)
-                        {
-                            Console.Write("Mileage: ");
-
-                            string? input1 = Console.ReadLine();
-
-                            if (int.TryParse(input1, out mileage) && mileage >= 0) break;
-
-                            Console.WriteLine("Please enter a non-negative integer");
-                        }
+                        var name = ConsoleInput.ReadNonEmptyString("Car name: ");
+                        var mileage = ConsoleInput.ReadIntNonNegative("Mileage: ");
 
                         var car = new Car { Name = name, MileageKm = mileage};
                         garage.AddCar(car);
@@ -75,19 +64,8 @@ namespace GarageManager
                         break;
 
                     case "3":
-                        Console.Write("Car name: ");
-                        var nameRecord = Console.ReadLine();
-
-                        int mileageRecord;
-                        while (true)
-                        {
-                            Console.Write("Mileage: ");
-                            string? input1 = Console.ReadLine();
-
-                            if (int.TryParse(input1, out mileageRecord) && mileageRecord >= 0) break;
-
-                            Console.WriteLine("Please enter a non-negative integer");
-                        }
+                        var nameRecord = ConsoleInput.ReadNonEmptyString("Car name: ");
+                        var mileageRecord = ConsoleInput.ReadIntNonNegative("Mileage: ");
                         
                         Console.Write("Description record: ");
                         var descriptionRecord = Console.ReadLine();
