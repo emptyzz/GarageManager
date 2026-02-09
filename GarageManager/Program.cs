@@ -41,8 +41,17 @@ namespace GarageManager
                         Console.Write("Car name: ");
                         var name = Console.ReadLine();
 
-                        Console.Write("Mileage: ");
-                        int mileage = int.Parse(Console.ReadLine());
+                        int mileage;
+                        while (true)
+                        {
+                            Console.Write("Mileage: ");
+
+                            string? input1 = Console.ReadLine();
+
+                            if (int.TryParse(input1, out mileage) && mileage >= 0) break;
+
+                            Console.WriteLine("Please enter a non-negative integer");
+                        }
 
                         var car = new Car { Name = name, MileageKm = mileage};
                         garage.AddCar(car);
@@ -69,14 +78,30 @@ namespace GarageManager
                         Console.Write("Car name: ");
                         var nameRecord = Console.ReadLine();
 
-                        Console.Write("Mileage: ");
-                        var mileageRecord = int.Parse(Console.ReadLine());
+                        int mileageRecord;
+                        while (true)
+                        {
+                            Console.Write("Mileage: ");
+                            string? input1 = Console.ReadLine();
 
+                            if (int.TryParse(input1, out mileageRecord) && mileageRecord >= 0) break;
+
+                            Console.WriteLine("Please enter a non-negative integer");
+                        }
+                        
                         Console.Write("Description record: ");
                         var descriptionRecord = Console.ReadLine();
 
-                        Console.Write("Hom much cost: ");
-                        decimal cost = decimal.Parse(Console.ReadLine());
+                        int cost;
+                        while (true)
+                        {
+                            Console.Write("Hom much cost: ");
+                            string? input1 = Console.ReadLine();
+
+                            if (int.TryParse(input1, out cost) && cost >= 0) break;
+
+                            Console.WriteLine("Please enter a non-negative integer");
+                        }
 
                         var record = new ServiceRecord {CarName = nameRecord, MileageKm = mileageRecord, Description = descriptionRecord, Cost = cost, Date = DateTime.Today};
                         garage.AddRecord(record);
