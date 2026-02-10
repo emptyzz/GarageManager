@@ -45,5 +45,18 @@ namespace GarageManager.Services
             }
             return cars;
         }
+
+        public static bool DeleteCarById(int id)
+        {
+            var connectionString = "Data Source=garage.db";
+            using var connection = new SqliteConnection(connectionString);
+            connection.Open();
+            using var command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM Cars WHERE Id = @id;";
+            command.Parameters.AddWithValue("@id", id);
+
+            int rows = command.ExecuteNonQuery();
+            return rows > 0;
+        }
     }
 }
