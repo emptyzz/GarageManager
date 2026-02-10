@@ -18,10 +18,6 @@ namespace GarageManager
 
             var garage = new GarageService();
 
-            var persistence = new PersistenceService("garage.json");
-            var data = persistence.Load();
-            garage.ImportData(data);
-
             while (true)
             {
                 Console.WriteLine("\n=== Garage Manager ===");
@@ -119,17 +115,6 @@ namespace GarageManager
                         break;
 
                     case "6":
-                        var dataToSave = garage.ExportData();
-                        persistence.Save(dataToSave);
-                        Console.WriteLine("Saved.");
-                        break;
-                    case "7":
-                        var dataToLoad = persistence.Load();
-                        garage.ImportData(dataToLoad);
-                        Console.WriteLine("Loaded.");
-                        break;
-
-                    case "8":
                         var id = ConsoleInput.ReadIntNonNegative("Car id: ");
 
                         if (CarRepository.DeleteCarById(id))
