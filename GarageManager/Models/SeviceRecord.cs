@@ -13,5 +13,7 @@ namespace GarageManager.Models
         public decimal Cost { get; set; }
         public int MileageKm { get; set; }
         public string CarName { get; set; } = "";
+        public int Id { get; set; }
+        public int CarId { get; set; }
     }
 }

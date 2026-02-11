@@ -61,7 +61,7 @@ namespace GarageManager
                         break;
 
                     case "3":
-                        var nameRecord = ConsoleInput.ReadNonEmptyString("Car name: ");
+                        var carId = ConsoleInput.ReadIntNonNegative("Car id: ");
                         var mileageRecord = ConsoleInput.ReadIntNonNegative("Mileage: ");
 
                         Console.Write("Description record: ");
@@ -78,16 +78,13 @@ namespace GarageManager
                             Console.WriteLine("Please enter a non-negative integer");
                         }
 
-                        var record = new ServiceRecord { CarName = nameRecord, MileageKm = mileageRecord, Description = descriptionRecord, Cost = cost, Date = DateTime.Today };
-                        garage.AddRecord(record);
+                        ServiceRecordRepository.AddRecord(carId, mileageRecord, descriptionRecord, cost, DateTime.Today);
                         Console.WriteLine("Record added successful");
                         break;
 
                     case "4":
-                        Console.Write("Car name: ");
-                        var nameGetRecords = Console.ReadLine();
-
-                        var records = garage.GetRecordsForCar(nameGetRecords);
+                        var carIdRecords = ConsoleInput.ReadIntNonNegative("Car id: ");
+                        var records = ServiceRecordRepository.GetRecordsForCar(carIdRecords);
 
                         if (records.Count == 0)
                         {
