@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -14,11 +15,7 @@ namespace GarageManager
     {
         static void Main()
         {
-            var garage = new GarageService();
-
-            var persistence = new PersistenceService("garage.json");
-            var data = persistence.Load();
-            garage.ImportData(data);
+            DatabaseInitializer.Initialize();
 
             while (true)
             {
@@ -28,9 +25,7 @@ namespace GarageManager
                 Console.WriteLine("3 - Add service record");
                 Console.WriteLine("4 - Show service record");
                 Console.WriteLine("5 - Total cost for car");
-                Console.WriteLine("6 - Save data");
-                Console.WriteLine("7 - Load data");
-                Console.WriteLine("8 - Delete car");
+                Console.WriteLine("6 - Delete car");
                 Console.WriteLine("0 - Exit");
 
                 Console.WriteLine("Choose option: ");
@@ -42,15 +37,14 @@ namespace GarageManager
                         var name = ConsoleInput.ReadNonEmptyString("Car name: ");
                         var mileage = ConsoleInput.ReadIntNonNegative("Mileage: ");
 
-                        var car = new Car { Name = name, MileageKm = mileage};
-                        garage.AddCar(car);
+                        CarRepository.AddCar(name, mileage);
                         Console.WriteLine("Car added successful");
                         break;
 
                     case "2":
-                        var cars = garage.GetCars();
+                        var cars = CarRepository.GetCars();
 
-                        if(cars.Count == 0)
+                        if (cars.Count == 0)
                         {
                             Console.WriteLine("No cars added yet.");
                         }
@@ -58,15 +52,20 @@ namespace GarageManager
                         {
                             foreach (var c in cars)
                             {
-                                Console.WriteLine(c.Name + " - " + c.MileageKm + " km");
+                                Console.WriteLine("Id:" + c.Id + " " + c.Name + " - " + c.MileageKm + " km");
                             }
                         }
                         break;
 
                     case "3":
-                        var nameRecord = ConsoleInput.ReadNonEmptyString("Car name: ");
+                        var carId = ConsoleInput.ReadIntNonNegative("Car id: ");
+                        if (!CarRepository.Exists(carId))
+                        {
+                            Console.WriteLine("Car not found");
+                            break;
+                        }
+
                         var mileageRecord = ConsoleInput.ReadIntNonNegative("Mileage: ");
-                        
                         Console.Write("Description record: ");
                         var descriptionRecord = Console.ReadLine();
 
@@ -81,16 +80,13 @@ namespace GarageManager
                             Console.WriteLine("Please enter a non-negative integer");
                         }
 
-                        var record = new ServiceRecord {CarName = nameRecord, MileageKm = mileageRecord, Description = descriptionRecord, Cost = cost, Date = DateTime.Today};
-                        garage.AddRecord(record);
+                        ServiceRecordRepository.AddRecord(carId, mileageRecord, descriptionRecord, cost, DateTime.Today);
                         Console.WriteLine("Record added successful");
                         break;
 
                     case "4":
-                        Console.Write("Car name: ");
-                        var nameGetRecords = Console.ReadLine();
-
-                        var records = garage.GetRecordsForCar(nameGetRecords);
+                        var carIdRecords = ConsoleInput.ReadIntNonNegative("Car id: ");
+                        var records = ServiceRecordRepository.GetRecordsForCar(carIdRecords);
 
                         if (records.Count == 0)
                         {
@@ -107,32 +103,19 @@ namespace GarageManager
                         break;
 
                     case "5":
-                        Console.Write("Car name: ");
-                        var nameCost = Console.ReadLine();
-                        var total = garage.GetTotalCostForCar(nameCost);
+                        var idTotal = ConsoleInput.ReadIntNonNegative("Car id: ");
+                        var total = ServiceRecordRepository.GetTotalCostForCar(idTotal);
                         if (total == 0)
                             Console.WriteLine("No record / total 0");
                         else
-                            Console.WriteLine("Total cost for " + nameCost + ": " + total);
-                        
+                            Console.WriteLine("Total cost for " + idTotal + ": " + total);
+
                         break;
-                        
+
                     case "6":
-                        var dataToSave = garage.ExportData();
-                        persistence.Save(dataToSave);
-                        Console.WriteLine("Saved.");
-                        break;
-                    case "7":
-                        var dataToLoad = persistence.Load();
-                        garage.ImportData(dataToLoad);
-                        Console.WriteLine("Loaded.");
-                        break;
+                        var id = ConsoleInput.ReadIntNonNegative("Car id: ");
 
-                    case "8":
-                        Console.Write("Car name: ");
-                        var nameDeletedCar = Console.ReadLine();
-
-                        if (garage.DeleteCar(nameDeletedCar))
+                        if (CarRepository.DeleteCarById(id))
                             Console.WriteLine("Car deleted successful");
                         else Console.WriteLine("Car not found");
 
