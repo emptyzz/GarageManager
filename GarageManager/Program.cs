@@ -17,8 +17,6 @@ namespace GarageManager
         {
             DatabaseInitializer.Initialize();
 
-            var garage = new GarageService();
-
             while (true)
             {
                 Console.WriteLine("\n=== Garage Manager ===");
