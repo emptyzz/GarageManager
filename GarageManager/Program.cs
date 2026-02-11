@@ -59,8 +59,13 @@ namespace GarageManager
 
                     case "3":
                         var carId = ConsoleInput.ReadIntNonNegative("Car id: ");
-                        var mileageRecord = ConsoleInput.ReadIntNonNegative("Mileage: ");
+                        if (!CarRepository.Exists(carId))
+                        {
+                            Console.WriteLine("Car not found");
+                            break;
+                        }
 
+                        var mileageRecord = ConsoleInput.ReadIntNonNegative("Mileage: ");
                         Console.Write("Description record: ");
                         var descriptionRecord = Console.ReadLine();
 
