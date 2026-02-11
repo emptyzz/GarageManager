@@ -67,5 +67,24 @@ namespace GarageManager.Services
             }
             return records;
         }
+
+        public static decimal GetTotalCostForCar(int carId)
+        {
+            var connectionString = "Data Source=garage.db";
+            using var connection = new SqliteConnection(connectionString);
+            connection.Open();
+            using var command = connection.CreateCommand();
+
+            command.CommandText = "PRAGMA foreign_keys = ON;";
+            command.ExecuteNonQuery();
+
+            command.CommandText = "SELECT COALESCE(SUM(Cost), 0) FROM ServiceRecords WHERE CarId = @carId;";
+
+            command.Parameters.AddWithValue("@carId", carId);
+
+            var resultObj = command.ExecuteScalar();
+            double total = Convert.ToDouble(resultObj);
+            return (decimal)total;
+        }
     }
 }

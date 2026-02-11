@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -26,9 +27,7 @@ namespace GarageManager
                 Console.WriteLine("3 - Add service record");
                 Console.WriteLine("4 - Show service record");
                 Console.WriteLine("5 - Total cost for car");
-                Console.WriteLine("6 - Save data");
-                Console.WriteLine("7 - Load data");
-                Console.WriteLine("8 - Delete car");
+                Console.WriteLine("6 - Delete car");
                 Console.WriteLine("0 - Exit");
 
                 Console.WriteLine("Choose option: ");
@@ -101,13 +100,12 @@ namespace GarageManager
                         break;
 
                     case "5":
-                        Console.Write("Car name: ");
-                        var nameCost = Console.ReadLine();
-                        var total = garage.GetTotalCostForCar(nameCost);
+                        var idTotal = ConsoleInput.ReadIntNonNegative("Car id: ");
+                        var total = ServiceRecordRepository.GetTotalCostForCar(idTotal);
                         if (total == 0)
                             Console.WriteLine("No record / total 0");
                         else
-                            Console.WriteLine("Total cost for " + nameCost + ": " + total);
+                            Console.WriteLine("Total cost for " + idTotal + ": " + total);
 
                         break;
 
