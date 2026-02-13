@@ -2,12 +2,10 @@
 
 namespace GarageManager.Services
 {
-    internal class DatabaseInitializer
+    public class DatabaseInitializer
     {
-        public static void Initialize()
+        public static void Initialize(string connectionString)
         {
-            var connectionString = "Data Source=garage.db";
-
             using var connection = new SqliteConnection(connectionString);
             connection.Open();
 
@@ -37,6 +35,10 @@ namespace GarageManager.Services
                ");";
 
             command.ExecuteNonQuery();
+        }
+        public static void Initialize()
+        {
+            Initialize("Data Source=garage.db");
         }
     }
 }

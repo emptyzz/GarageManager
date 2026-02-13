@@ -7,9 +7,9 @@ namespace GarageManager
     {
         static void Main()
         {
-            DatabaseInitializer.Initialize();
-
             var connectionString = "Data Source=garage.db";
+            DatabaseInitializer.Initialize(connectionString);
+
             var carRepo = new CarRepository(connectionString);
             var recordRepo = new ServiceRecordRepository(connectionString);
 

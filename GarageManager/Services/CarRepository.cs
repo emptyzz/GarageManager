@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 
 namespace GarageManager.Services
 {
-    internal class CarRepository
+    public class CarRepository
     {
         private readonly string _connectionString;
         public CarRepository(string connectionString) { _connectionString = connectionString; }
