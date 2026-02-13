@@ -10,9 +10,7 @@ namespace GarageManager.Models
     {
         public string Name { get; set; } = "";
         public int MileageKm { get; set; }
-
         public int Id { get; set; }
-
         public override string ToString()
             => $"{Name} ({MileageKm} km)";
     }
