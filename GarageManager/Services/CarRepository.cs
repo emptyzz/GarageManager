@@ -5,11 +5,11 @@ namespace GarageManager.Services
 {
     internal class CarRepository
     {
-        public static void AddCar(string name, int mileage)
+        private readonly string _connectionString;
+        public CarRepository(string connectionString) { _connectionString = connectionString; }
+        public void AddCar(string name, int mileage)
         {
-            var connectionString = "Data Source=garage.db";
-
-            using var connection = new SqliteConnection(connectionString);
+            using var connection = new SqliteConnection(_connectionString);
             connection.Open();
 
             using var command = connection.CreateCommand();
@@ -22,12 +22,10 @@ namespace GarageManager.Services
             command.ExecuteNonQuery();
         }
 
-        public static List<Car> GetCars()
+        public List<Car> GetCars()
         {
             var cars = new List<Car>();
-
-            var connectionString = "Data Source=garage.db";
-            using var connection = new SqliteConnection(connectionString);
+            using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
             command.CommandText = "SELECT Id, Name, MileageKm FROM Cars ORDER BY Id;";
@@ -46,10 +44,9 @@ namespace GarageManager.Services
             return cars;
         }
 
-        public static bool DeleteCarById(int id)
+        public bool DeleteCarById(int id)
         {
-            var connectionString = "Data Source=garage.db";
-            using var connection = new SqliteConnection(connectionString);
+            using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
             command.CommandText = "DELETE FROM Cars WHERE Id = @id;";
@@ -58,10 +55,9 @@ namespace GarageManager.Services
             int rows = command.ExecuteNonQuery();
             return rows > 0;
         }
-        public static bool Exists(int carId)
+        public bool Exists(int carId)
         {
-            var connectionString = "Data Source=garage.db";
-            using var connection = new SqliteConnection(connectionString);
+            using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
             command.CommandText = "SELECT 1 FROM Cars WHERE Id = @id LIMIT 1;";

@@ -10,11 +10,11 @@ namespace GarageManager.Services
 {
     internal class ServiceRecordRepository
     {
-        public static void AddRecord(int carId, int mileageKm, string description, decimal cost, DateTime date)
+        private readonly string _connectionString;
+        public ServiceRecordRepository(string connectionString) { _connectionString = connectionString; }
+        public void AddRecord(int carId, int mileageKm, string description, decimal cost, DateTime date)
         {
-            var connectionString = "Data Source=garage.db";
-
-            using var connection = new SqliteConnection(connectionString);
+            using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
 
@@ -33,12 +33,11 @@ namespace GarageManager.Services
 
             command.ExecuteNonQuery();
         }
-        public static List<ServiceRecord> GetRecordsForCar(int carId)
+        public List<ServiceRecord> GetRecordsForCar(int carId)
         {
             var records = new List<ServiceRecord>();
 
-            var connectionString = "Data Source=garage.db";
-            using var connection = new SqliteConnection(connectionString);
+            using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
 
@@ -68,10 +67,9 @@ namespace GarageManager.Services
             return records;
         }
 
-        public static decimal GetTotalCostForCar(int carId)
+        public decimal GetTotalCostForCar(int carId)
         {
-            var connectionString = "Data Source=garage.db";
-            using var connection = new SqliteConnection(connectionString);
+            using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             using var command = connection.CreateCommand();
 
