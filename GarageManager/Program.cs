@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using GarageManager.Models;
-using GarageManager.Services;
+﻿using GarageManager.Services;
 using GarageManager.UI;
 
 namespace GarageManager
@@ -70,19 +62,9 @@ namespace GarageManager
                         }
 
                         var mileageRecord = ConsoleInput.ReadIntNonNegative("Mileage: ");
-                        Console.Write("Description record: ");
-                        var descriptionRecord = Console.ReadLine();
+                        var descriptionRecord = ConsoleInput.ReadNonEmptyString("Description record: ");
 
-                        int cost;
-                        while (true)
-                        {
-                            Console.Write("Hom much cost: ");
-                            string? input1 = Console.ReadLine();
-
-                            if (int.TryParse(input1, out cost) && cost >= 0) break;
-
-                            Console.WriteLine("Please enter a non-negative integer");
-                        }
+                        var cost = ConsoleInput.ReadDecimalNonNegative("How much cost: ");
 
                         recordRepo.AddRecord(carId, mileageRecord, descriptionRecord, cost, DateTime.Today);
                         Console.WriteLine("Record added successful");
