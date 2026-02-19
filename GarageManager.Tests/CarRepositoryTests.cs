@@ -38,4 +38,21 @@ public class CarRepositoryTests
 
         Assert.Empty(carsAfter);
     }
+    [Fact]
+    public void Exists_ReturnsTrueForExistingId()
+    {
+        var dbPath = $"test_{Guid.NewGuid():N}.db";
+        var cs = $"Data Source={dbPath}";
+
+        DatabaseInitializer.Initialize(cs);
+        var repo = new CarRepository(cs);
+
+        repo.AddCar("Test Car", 123);
+
+        var cars = repo.GetCars();
+        var id = cars[0].Id;
+
+        Assert.True(repo.Exists(id));
+        Assert.False(repo.Exists(999999));
+    }
 }
