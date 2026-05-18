@@ -11,4 +11,10 @@ public class HealthController : ControllerBase
     {
         return Ok(new { status = "ok", timestamp = DateTime.UtcNow });
     }
+
+    [HttpGet("version")]
+    public IActionResult GetVersion()
+    {
+        return Ok(new { version = "1.0.0", api = "GarageManager" });
+    }
 }
