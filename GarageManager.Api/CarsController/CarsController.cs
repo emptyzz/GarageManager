@@ -20,4 +20,12 @@ public class CarsController : ControllerBase
     {
         return Ok(_cars);
     }
+
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
+    {
+        var car = _cars.FirstOrDefault( c => c.Id == id);
+        if (car == null) return NotFound();
+        else { return Ok(car); }
+    }
 }
