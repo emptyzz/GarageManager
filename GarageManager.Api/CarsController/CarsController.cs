@@ -1,31 +1,35 @@
-using Microsoft.AspNetCore.Mvc;
+using GarageManager.Api.Data;
 using GarageManager.Api.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace GarageManager.Api.Controllers;
+namespace GarageManager.Api.CarsController;
 
 [ApiController]
-[Route("api/cars")]
-
+[Route("api/[controller]")]
 public class CarsController : ControllerBase
 {
-    private static readonly List<Car> _cars = new()
+    private readonly GarageDbContext _context;
+
+    public CarsController(GarageDbContext context)
     {
-        new Car { Id = 1, Name = "Toyota Crown", MileageKm = 999 },
-        new Car { Id = 2, Name = "Toyota Mark II GX81", MileageKm = 320000 },
-        new Car { Id = 3, Name = "BMW E39 530i", MileageKm = 250000 }
-    };
+        _context = context;
+    }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<ActionResult<IEnumerable<Car>>> GetCars()
     {
-        return Ok(_cars);
+        return await _context.Cars.ToListAsync();
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    public async Task<ActionResult<Car>> GetCar(int id)
     {
-        var car = _cars.FirstOrDefault( c => c.Id == id);
-        if (car == null) return NotFound();
-        else { return Ok(car); }
+        var car = await _context.Cars.FindAsync(id);
+
+        if (car == null)
+            return NotFound();
+
+        return car;
     }
 }
