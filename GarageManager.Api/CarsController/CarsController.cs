@@ -47,5 +47,34 @@ namespace GarageManager.Api.CarsController
 
             return CreatedAtAction(nameof(GetCar), new { id = car.Id }, car);
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCar(int id, [FromBody] UpdateCarDto dto)
+        {
+            var car = await _context.Cars.FindAsync(id);
+
+            if (car == null)
+                return NotFound();
+
+            car.Name = dto.Name;
+            car.MileageKm = dto.MileageKm;
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCar(int id)
+        {
+            var car = await _context.Cars.FindAsync(id);
+
+            if (car == null)
+                return NotFound();
+
+            _context.Cars.Remove(car);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
