@@ -43,5 +43,14 @@ namespace GarageManager.Api.Controllers
 
             return CreatedAtAction(nameof(GetRecords), new { carId = carId }, record);
         }
+
+        [HttpGet("/api/cars/{carId}/total-cost")]
+        public async Task<ActionResult<decimal>> TotalCost(int carId)
+        {
+            var carExists = await _context.Cars.AnyAsync(c => c.Id == carId);
+            if (!carExists) return NotFound();
+
+            return await _context.ServiceRecords.Where(r => r.CarId == carId).SumAsync(r => r.Cost);
+        }
     }
 }
