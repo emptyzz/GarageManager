@@ -79,29 +79,21 @@ GarageManager.sln
 
 ## Запуск REST API
 
-1. Убедитесь, что PostgreSQL запущен, и создайте (или подготовьте) базу для проекта.
+1. Убедитесь, что PostgreSQL запущен, и укажите свою строку подключения `GarageDb` в `GarageManager.Api/appsettings.json`.
 
-2. Задайте строку подключения `GarageDb`. **Не храните реальный пароль в `appsettings.json`** - используйте [user-secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets) для локальной разработки:
-
-   ```bash
-   cd GarageManager.Api
-   dotnet user-secrets init
-   dotnet user-secrets set "ConnectionStrings:GarageDb" "Host=localhost;Port=5432;Database=garagemanager;Username=postgres;Password=ВАШ_ПАРОЛЬ"
-   ```
-
-3. Примените миграции, чтобы создать таблицы:
+2. Примените миграции, чтобы создать таблицы:
 
    ```bash
    dotnet ef database update --project GarageManager.Api
    ```
 
-4. Запустите API:
+3. Запустите API:
 
    ```bash
    dotnet run --project GarageManager.Api
    ```
 
-5. Откройте Swagger UI в браузере: `http://localhost:5189/swagger` (или `https://localhost:7064/swagger`).
+4. Откройте Swagger UI в браузере: `http://localhost:5189/swagger` (или `https://localhost:7064/swagger`).
 
 ## Эндпоинты API
 
