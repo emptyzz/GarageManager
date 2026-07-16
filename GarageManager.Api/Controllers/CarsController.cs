@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GarageManager.Api.DTOs;
 
-namespace GarageManager.Api.CarsController 
+namespace GarageManager.Api.Controllers 
 {
     [ApiController]
     [Route("api/[controller]")]
